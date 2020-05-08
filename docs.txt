@@ -1,0 +1,23 @@
+=========
+ARDUINO
+=========
+command map:
+0: poll full state
+1: toggle pump mode
+2: pump on
+3: pump off
+4[0-255]: pump speed
+5: lights on
+6: lights off
+7[0-2]: light mode
+
+receive map
+{
+	mdl: model name,
+	data: model data
+}
+
+=========
+PI 4
+=========
+1. Flask web server
