@@ -140,6 +140,7 @@ void handleRx() {
       return; // nothing could be read in for some reason
     else executionCredit -= 1;
 
+    char str[2];
     switch(command) {
       /*
        * POLL FOR FULL STATE
@@ -153,8 +154,15 @@ void handleRx() {
        */
       // change the water pump mode between manual/automatic
       case 1:
-        pump.toggleMode();
-        break;
+        {
+          byte mode = readByteParam();
+          mode = int(mode);
+
+          if (mode)
+            pump.autoMode();
+          else pump.manualMode();
+          break;
+        }
       // turn the water pump on
       case 2:
         pump.on(true);

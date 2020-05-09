@@ -21,7 +21,8 @@ class WaterPump {
     void on(bool isUserCmd=false);
     void off(bool isUserCmd=false);
 
-    void toggleMode();
+    void autoMode();
+    void manualMode();
     void changeSpeed(int newSpeed);
     
     WaterPumpModel getState();

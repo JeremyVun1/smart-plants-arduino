@@ -8,14 +8,25 @@ WaterPump::WaterPump(int pin, int dir1, int dir2, int mSpeed)
   this->off();
 };
 
-void WaterPump::toggleMode() {
-  if (_mode == AUTO)
-    _mode == MANUAL;
-  else _mode == AUTO;
+void WaterPump::autoMode() {
+  if (!_mode == AUTO) {
+    _mode = AUTO;
+    stateChanged = true;
+  }
 };
+
+void WaterPump::manualMode() {
+  if (!_mode == MANUAL) {
+    _mode = MANUAL;
+    stateChanged = true;
+  }
+}
 
 void WaterPump::on(bool isUserCmd) {
   if (isUserCmd && _mode == AUTO)
+    return;
+
+  if (!isUserCmd && _mode == MANUAL)
     return;
 
   if (!_isOn) {
@@ -29,6 +40,9 @@ void WaterPump::on(bool isUserCmd) {
 
 void WaterPump::off(bool isUserCmd) {
   if (isUserCmd && _mode == AUTO)
+    return;
+
+  if (!isUserCmd && _mode == MANUAL)
     return;
 
   if (_isOn) {
@@ -57,4 +71,5 @@ WaterPumpModel WaterPump::getState() {
 
 void WaterPump::changeSpeed(int newSpeed) {
   _mSpeed = constrain(newSpeed, 0, 255);
+  analogWrite(_pin, _mSpeed);
 };
