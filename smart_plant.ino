@@ -214,9 +214,7 @@ void handleRx() {
 };
 
 /*
- * Check for RX commands every loop
- * Run internal logic every x seconds
- * Check and send regular state updates every 6th loop
+ * Main Loop
  */
 void loop() {
   // process and respond to incoming polls and commands
