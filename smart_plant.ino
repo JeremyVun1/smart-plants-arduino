@@ -220,7 +220,7 @@ void handleRx() {
 
 /*
  * Check for RX commands every loop
- * Run internal logic every 5th loop
+ * Run internal logic every x seconds
  * Check and send regular state updates every 6th loop
  */
 void loop() {
@@ -229,12 +229,12 @@ void loop() {
   plant.checkPlant();
   handlePump();
 
-  // Handle event triggers and send a regular update every 5 minutes
+  // Handle event triggers and send a regular update every x seconds
   // e.g. if the watering pump was turned on, send this event to the edge hub
   if (!loopCount) {
     sendRegularState();
     handleEventTransmitTriggers();
-    loopCount = 10;
+    loopCount = 20;
   };
   loopCount -= 1;
 

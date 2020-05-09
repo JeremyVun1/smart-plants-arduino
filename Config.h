@@ -22,7 +22,7 @@ int R_RST = 9;
 int R_SS = 10;
 
 // loop counter
-int loopCount = 10;
+int loopCount = 20;
 
 /*
  * Device GUID
