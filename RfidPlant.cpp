@@ -2,9 +2,6 @@
 
 RfidPlant::RfidPlant() : _tag_found(false), _counter(0) { };
 
-/*
-* INITIALISATION
-*/
 void RfidPlant::init(int ss, int rst) {
   _rfidReader = MFRC522(ss, rst);
   _rfidReader.PCD_Init();
@@ -15,24 +12,17 @@ void RfidPlant::init(int ss, int rst) {
   }
 };
 
-
 // ENTRY POINT
 bool RfidPlant::checkPlant() {
-  //char str[3];
-
   if (!_rfidReader.PICC_IsNewCardPresent() && !_rfidReader.PICC_ReadCardSerial()) {
     if (_counter > 2) {
       _tag_found = false;
-      //strcpy(str, "rm");
-      //Serial.println(str);
       _counter = 0;
     };
 
     return false;
   }
   else if (!_tag_found) {
-    //strcpy(str, "tf");
-    //Serial.println(str);
     _rfidReader.PICC_ReadCardSerial();
     loadPlant();
 
@@ -42,13 +32,9 @@ bool RfidPlant::checkPlant() {
   }
 
   if (!_rfidReader.PICC_IsNewCardPresent()) {
-    if (_plant.matchUID(_rfidReader.uid.uidByte)) {
-      //strcpy(str, "kp");
-      //Serial.println(str);
+    if (_plant.matchUID(_rfidReader.uid.uidByte))
       return true;
-    } else {
-      //strcpy(str, "np");
-      //Serial.println(str);
+    else {
       _counter = 3;
       return true;
     }
@@ -59,11 +45,8 @@ void RfidPlant:: loadPlant() {
   // authenticate against block 7
   byte trailerBlock = 7;
   MFRC522::StatusCode status = (MFRC522::StatusCode)_rfidReader.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, trailerBlock, &_key, &(_rfidReader.uid));
-  if (status != MFRC522::STATUS_OK) {
-    //Serial.print("PCD_Authenticate() failed: ");
-    //Serial.println(_rfidReader.GetStatusCodeName(status));
+  if (status != MFRC522::STATUS_OK)
     return;
-  }
 
   /*
    * READ PLANT DATA FROM THE RFID TAG
@@ -104,8 +87,6 @@ void RfidPlant:: loadPlant() {
     strcpy(_plant.pName, "NULL");
     strcpy(_plant.pDesc, "NULL");
   }
-
-  //Serial.println(_plant.pName);
 
   //_rfidReader.PICC_HaltA();
   _rfidReader.PCD_StopCrypto1();
