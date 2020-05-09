@@ -23,12 +23,10 @@ void setup() {
  */
 void handlePump() {
   // don't bother watering if there is no plant to water
-  if (!plant.hasPlant()) {
+  if (!plant.hasPlant())
     pump.off();
-  }
-  else if (moisture.isDry()) {
+  else if (moisture.isDry())
     pump.on();
-  }
 };
 
 /*
@@ -142,16 +140,10 @@ void handleRx() {
 
     char str[2];
     switch(command) {
-      /*
-       * POLL FOR FULL STATE
-       */
       case 0:
         sendFullStateUpdate();
         break;
 
-      /*
-       * WATE PUMP COMMANDS
-       */
       // change the water pump mode between manual/automatic
       case 1:
         {
@@ -163,14 +155,17 @@ void handleRx() {
           else pump.manualMode();
           break;
         }
+
       // turn the water pump on
       case 2:
         pump.on(true);
         break;
+
       // turn the water pump off
       case 3:
         pump.off(true);
         break;
+
       // change pump speed
       case 4:
         {
@@ -179,17 +174,16 @@ void handleRx() {
           break;
         }
 
-      /*
-       * LED LIGHTS COMMANDS
-       */
       // turn the light on
       case 5:
         lights.on();
         break;
+
       // turn the light off
       case 6:
         lights.off();
         break;
+
       // change light brightness
       case 7:
         {
@@ -207,6 +201,7 @@ void handleRx() {
           };
           break;
         };
+
         // respond to smart plant discovery query
         case 8:
           char data[4] = {"\"y\""};
